@@ -25,7 +25,7 @@ SECRET_KEY = 'ogv!(4f^jr&%921i7-f-ixrrcf71e@m+-p94rxza=(lxzsg^tt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['178.216.201.176']
 
 
 # Application definition
@@ -54,7 +54,7 @@ ROOT_URLCONF = 'bigdjangoproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
