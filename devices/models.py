@@ -16,7 +16,7 @@ class Rack(models.Model):
 	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
 
 	def __str__(self):
-		return '{}_{}'.format(data_center.name, self.name)
+		return '{}_{}'.format(self.data_center.name, self.name)
 
 class Vendor(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
@@ -35,9 +35,9 @@ class Device(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
 	ip_address = models.GenericIPAddressField() 
 	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
-	rack = models.ForeignKey(Rack, null=True, blank=False, on_delete=models.SET_NULL)
+	rack = models.ForeignKey(Rack, null=True, blank=True, on_delete=models.SET_NULL)
 	unit = models.CharField(max_length=2, null=True, blank=True)
 	model = models.ForeignKey(Product, null=True, blank=False, on_delete=models.SET_NULL)
 
 	def __str__(self):
-		return '{}_{}'.format(data_center.name, self.name)
+		return '{}_{}'.format(self.data_center.name, self.name)
