@@ -7,8 +7,37 @@ from django.db import models
 
 class DataCenter(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
-	
+
+	def __str__(self):
+		return self.name
+
+class Rack(models.Model):
+	name = models.CharField(max_length=15, null=False, blank=False)
+	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
+
+	def __str__(self):
+		return '{}_{}'.format(data_center.name, self.name)
+
+class Vendor(models.Model):
+	name = models.CharField(max_length=15, null=False, blank=False)
+
+	def __str__(self):
+		return self.name
+
+class Product(models.Model):
+	name = models.CharField(max_length=30, null=False, blank=False)
+	vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return '{} {}'.format(self.vendor, self.name)
+
 class Device(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
 	ip_address = models.GenericIPAddressField() 
+	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
+	rack = models.ForeignKey(Rack, null=True, blank=False, on_delete=models.SET_NULL)
+	unit = models.CharField(max_length=2, null=True, blank=True)
+	model = models.ForeignKey(Product, null=True, blank=False, on_delete=models.SET_NULL)
 
+	def __str__(self):
+		return '{}_{}'.format(data_center.name, self.name)
