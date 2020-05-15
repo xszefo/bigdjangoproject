@@ -20,5 +20,6 @@ from . import views
 
 app_name = 'devices'
 urlpatterns = [
-    path('', views.List_Devices.as_view(), name='list_devices'),
+    path('', views.ListDevices.as_view(), name='list_devices'),
+    path('create/', views.CreateDevice.as_view(), name='create_device'),
 ]

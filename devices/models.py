@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.urls import reverse
 from django.db import models
 
 # Create your models here.
@@ -39,12 +39,13 @@ class Device(models.Model):
 	unit = models.CharField(max_length=2, null=True, blank=True)
 	model = models.ForeignKey(Product, null=True, blank=False, on_delete=models.SET_NULL)
 
+	def get_absolute_url(self):
+		return reverse('devices:list_devices')
+
 	def __str__(self):
 		return '{}_{}'.format(self.data_center.name, self.name)
 
 class IpAddressPool(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
 	subnet = models.GenericIPAddressField()
-	mask = models.PositiveSmallIntegerField()
-
-
+	mask = models.PositiveSmallIntegerField(null=False, blank=False, default=24)

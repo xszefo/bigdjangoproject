@@ -7,4 +7,4 @@ admin.site.register(dev.Rack)
 admin.site.register(dev.Vendor)
 admin.site.register(dev.Product)
 admin.site.register(dev.Device)
-
+admin.site.register(dev.IpAddressPool)
