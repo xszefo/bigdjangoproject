@@ -8,7 +8,7 @@ from . import models
 
 class List_Devices(ListView):
 	model = models.Device
-
+	
 
 def list_devices(request):
 	context = {}

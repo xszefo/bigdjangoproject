@@ -16,7 +16,7 @@ class Rack(models.Model):
 	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
 
 	def __str__(self):
-		return '{}_{}'.format(self.data_center.name, self.name)
+		return '{}'.format(self.name)
 
 class Vendor(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
@@ -32,7 +32,7 @@ class Product(models.Model):
 		return '{} {}'.format(self.vendor, self.name)
 
 class Device(models.Model):
-	name = models.CharField(max_length=15, null=False, blank=False)
+	name = models.CharField(max_length=15, null=False, blank=False, unique=True)
 	ip_address = models.GenericIPAddressField() 
 	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
 	rack = models.ForeignKey(Rack, null=True, blank=True, on_delete=models.SET_NULL)
@@ -41,3 +41,10 @@ class Device(models.Model):
 
 	def __str__(self):
 		return '{}_{}'.format(self.data_center.name, self.name)
+
+class IpAddressPool(models.Model):
+	name = models.CharField(max_length=15, null=False, blank=False)
+	subnet = models.GenericIPAddressField()
+	mask = models.PositiveSmallIntegerField()
+
+
