@@ -22,8 +22,8 @@
 			<td>{{ device.ip_address }}</td>
 			<td>{{ device.rack }}u{{device.unit}}</td>
 			<td>{{ device.model }}</td>
-			<td><button class='btn btn-primary'></button></td>
-			<td><button class='btn btn-danger'></button></td>
+			<td><a href="{% url 'devices:update_device' slug=device.slug %}"><button class='btn btn-primary'></button></a></td>
+			<td><a href="{% url 'devices:delete_device' slug=device.slug %}"><button class='btn btn-danger'></button></a></td>
 			</tr>
 			{% endfor %}
 		</tbody>

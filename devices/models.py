@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.urls import reverse
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -38,9 +39,15 @@ class Device(models.Model):
 	rack = models.ForeignKey(Rack, null=True, blank=True, on_delete=models.SET_NULL)
 	unit = models.CharField(max_length=2, null=True, blank=True)
 	model = models.ForeignKey(Product, null=True, blank=False, on_delete=models.SET_NULL)
+	slug = models.SlugField(unique=True)
 
 	def get_absolute_url(self):
 		return reverse('devices:list_devices')
+
+	def save(self, *args, **kwargs):
+		temp_slug = '{}-{}'.format(self.data_center.name, self.name)
+		self.slug = slugify(temp_slug)
+		super(Device, self).save(*args, **kwargs)
 
 	def __str__(self):
 		return '{}_{}'.format(self.data_center.name, self.name)

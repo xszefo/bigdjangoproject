@@ -22,4 +22,6 @@ app_name = 'devices'
 urlpatterns = [
     path('', views.ListDevices.as_view(), name='list_devices'),
     path('create/', views.CreateDevice.as_view(), name='create_device'),
+    path('update/<str:slug>/', views.UpdateDevice.as_view(), name='update_device'),
+    path('delete/<str:slug>/', views.DeleteDevice.as_view(), name='delete_device'),
 ]
