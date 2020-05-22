@@ -1,32 +1,74 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
+
 <a href="{% url 'devices:create_device' %}"<button class='btn btn-primary mb-5'>Add device</button></a>
 
-<div class='row'>
-	<table class='table'>
-		<thead>
-			<td>Name</td>
-			<td>DC</td>
-			<td>IP</td>
-			<td>Rack_unit</td>
-			<td>Model</td>
-			<td>Update</td>
-			<td>Delete</td>
-		</thead>
-		<tbody>
-			{% for device in object_list %}
-			<tr>
-			<td>{{ device.name }}</td>
-			<td>{{ device.data_center }}</td>
-			<td>{{ device.ip_address }}</td>
-			<td>{{ device.rack }}u{{device.unit}}</td>
-			<td>{{ device.model }}</td>
-			<td><a href="{% url 'devices:update_device' slug=device.slug %}"><button class='btn btn-primary'></button></a></td>
-			<td><a href="{% url 'devices:delete_device' slug=device.slug %}"><button class='btn btn-danger'></button></a></td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="devices-tab" data-toggle="tab" href="#devices" role="tab" aria-controls="devices" aria-selected="true">Devices</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="clusters-tab" data-toggle="tab" href="#clusters" role="tab" aria-controls="clusters" aria-selected="false">Clusters</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="devices" role="tabpanel" aria-labelledby="devices-tab">
+	<div class="row">
+		<table class='table'>
+			<thead>
+				<td>Name</td>
+				<td>DC</td>
+				<td>IP</td>
+				<td>Rack_unit</td>
+				<td>Model</td>
+				<td>Update</td>
+				<td>Delete</td>
+			</thead>
+			<tbody>
+				{% for device in object_list %}
+				<tr>
+				<td>{{ device.name }}</td>
+				<td>{{ device.data_center }}</td>
+				<td>{{ device.ip_address }}</td>
+				<td>{{ device.rack }}u{{device.unit}}</td>
+				<td>{{ device.model }}</td>
+				<td><a href="{% url 'devices:update_device' slug=device.slug %}"><button class='btn btn-primary'></button></a></td>
+				<td><a href="{% url 'devices:delete_device' slug=device.slug %}"><button class='btn btn-danger'></button></a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+  </div>
+
+  <div class="tab-pane" id="clusters" role="tabpanel" aria-labelledby="clusters-tab">
+  
+	<div class="row">
+		<table class='table'>
+			<thead>
+				<td>Name</td>
+				<td>IP address</td>
+				<td>Device 1</td>
+				<td>Device 2</td>
+			</thead>
+			<tbody>
+				{% for cluster in all_clusters %}
+				<tr>
+				<td>{{ cluster.name }}</td>
+				<td>{{ cluster.ip_address }}</td>
+				<td>{{ cluster.dev1 }}</td>
+				<td>{{ cluster.dev2 }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+  </div>
 </div>
+
+
+
 {% endblock content %}

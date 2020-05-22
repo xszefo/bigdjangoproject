@@ -56,3 +56,13 @@ class IpAddressPool(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
 	subnet = models.GenericIPAddressField()
 	mask = models.PositiveSmallIntegerField(null=False, blank=False, default=24)
+
+class Cluster(models.Model):
+	name = models.CharField(max_length=15, null=False, blank=False)
+	dev1 = models.ForeignKey(Device, related_name='dev1', null=True, blank=False, on_delete=models.SET_NULL)
+	dev2 = models.ForeignKey(Device, related_name='dev2', null=True, blank=False, on_delete=models.SET_NULL)
+	ip_address = models.GenericIPAddressField() 
+	
+	def __str__(self):
+		return self.name
+

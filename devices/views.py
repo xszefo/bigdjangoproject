@@ -9,6 +9,11 @@ from . import models
 
 class ListDevices(ListView):
 	model = models.Device
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		all_clusters = models.Cluster.objects.all()
+		context['all_clusters'] = all_clusters
+		return context
 
 class CreateDevice(CreateView):
 	model = models.Device
