@@ -12,13 +12,6 @@ class DataCenter(models.Model):
 	def __str__(self):
 		return self.name
 
-class Rack(models.Model):
-	name = models.CharField(max_length=15, null=False, blank=False)
-	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
-
-	def __str__(self):
-		return '{}'.format(self.name)
-
 class Vendor(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
 
@@ -36,10 +29,14 @@ class Device(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False, unique=True)
 	ip_address = models.GenericIPAddressField() 
 	data_center = models.ForeignKey(DataCenter, null=True, blank=False, on_delete=models.SET_NULL)
-	rack = models.ForeignKey(Rack, null=True, blank=True, on_delete=models.SET_NULL)
-	unit = models.CharField(max_length=2, null=True, blank=True)
+	edc_id = models.PositiveSmallIntegerField(null=False, blank=False, unique=True)
 	model = models.ForeignKey(Product, null=True, blank=False, on_delete=models.SET_NULL)
 	slug = models.SlugField(unique=True)
+
+	@property	
+	def edc_url(self):
+		url = 'http://www.test.pl/{}'.format(self.edc_id)
+		return url
 
 	def get_absolute_url(self):
 		return reverse('devices:list_devices')
@@ -56,13 +53,4 @@ class IpAddressPool(models.Model):
 	name = models.CharField(max_length=15, null=False, blank=False)
 	subnet = models.GenericIPAddressField()
 	mask = models.PositiveSmallIntegerField(null=False, blank=False, default=24)
-
-class Cluster(models.Model):
-	name = models.CharField(max_length=15, null=False, blank=False)
-	dev1 = models.ForeignKey(Device, related_name='dev1', null=True, blank=False, on_delete=models.SET_NULL)
-	dev2 = models.ForeignKey(Device, related_name='dev2', null=True, blank=False, on_delete=models.SET_NULL)
-	ip_address = models.GenericIPAddressField() 
-	
-	def __str__(self):
-		return self.name
 
