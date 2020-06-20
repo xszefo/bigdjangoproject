@@ -3,26 +3,37 @@
 {% block content %}
 
 <a href="{% url 'devices:create_device' %}"<button class='btn btn-primary mb-5'>Add device</button></a>
-
 <div class="row">
 	<table class='table'>
 		<thead>
 			<td>Name</td>
 			<td>DC</td>
 			<td>IP</td>
+			<td>Cluster</td>
 			<td>Model</td>
 			<td>eDC</td>
 			<td>Update</td>
 			<td>Delete</td>
 		</thead>
 		<tbody>
-			{% for device in object_list %}
+		 <form method="get">
+
+	{% for field in form %}
+		{{ field.label}}
+		{{ field }}
+		</hr>
+	{% endfor %}
+    <button type="submit">Search</button>
+  </form>
+  <a class="btn btn-danger" href="{% url 'devices:list_devices' %}">Reset</a>
+			{% for device in queryset %}
 			<tr>
 			<td>{{ device.name }}</td>
 			<td>{{ device.data_center }}</td>
 			<td>{{ device.ip_address }}</td>
+			<td> <input id="checkbox_disabled" type="checkbox" name="cluster" {% if device.cluster %}checked{% endif %} disabled /><label for="cluster"></label></td>
 			<td>{{ device.model }}</td>
-			<td>{{ device.edc_url }}</td>
+			<td><a href="{{ device.edc_url }}">{{ device.edc_url }}</td>
 			<td><a href="{% url 'devices:update_device' slug=device.slug %}"><button class='btn btn-primary'></button></a></td>
 			<td><a href="{% url 'devices:delete_device' slug=device.slug %}"><button class='btn btn-danger'></button></a></td>
 			</tr>
