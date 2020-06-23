@@ -16,16 +16,18 @@
 			<td>Delete</td>
 		</thead>
 		<tbody>
-		 <form method="get">
 
+  <form method="get">
 	{% for field in form %}
-		{{ field.label}}
-		{{ field }}
-		</hr>
+		<div style="display:flex; flex-direction: column; padding: 10px; margin: 10px">
+			{{ field.label}}
+			{{ field }}
+		</div>
 	{% endfor %}
-    <button type="submit">Search</button>
+    <button type="submit" style="margin: 10px;" class="btn btn-info">Search</button>
+  	<a class="btn btn-info" style="margin: 10px;" href="{% url 'devices:list_devices' %}">Reset</a>
   </form>
-  <a class="btn btn-danger" href="{% url 'devices:list_devices' %}">Reset</a>
+
 			{% for device in queryset %}
 			<tr>
 			<td>{{ device.name }}</td>
