@@ -15,7 +15,7 @@ class DeviceFilter(django_filters.FilterSet):
         model = models.Device
         fields = {
 				'name': ['contains'], 
-				'data_center': ['exact'], 
+				'ip_pool': ['exact'], 
 				'ip_address': ['contains']
 				}
 
@@ -25,7 +25,7 @@ class ListDevices(View):
 	
 		queryset = sorted(dev_filter.qs, key=lambda obj: obj.ip_address_int)
 		form = dev_filter.form
-
+		
 		context = {
 				'queryset': queryset,
 				'form': form,

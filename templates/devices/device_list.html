@@ -7,7 +7,6 @@
 	<table class='table'>
 		<thead>
 			<td>Name</td>
-			<td>DC</td>
 			<td>IP</td>
 			<td>Cluster</td>
 			<td>Model</td>
@@ -31,11 +30,10 @@
 			{% for device in queryset %}
 			<tr>
 			<td>{{ device.name }}</td>
-			<td>{{ device.data_center }}</td>
 			<td>{{ device.ip_address }}</td>
 			<td> <input id="checkbox_disabled" type="checkbox" name="cluster" {% if device.cluster %}checked{% endif %} disabled /><label for="cluster"></label></td>
 			<td>{{ device.model }}</td>
-			<td><a href="{{ device.edc_url }}">{{ device.edc_url }}</td>
+			<td><a href="{{ device.edc_url }}"><button class="btn btn-warning"></button></a></td>
 			<td><a href="{% url 'devices:update_device' slug=device.slug %}"><button class='btn btn-primary'></button></a></td>
 			<td><a href="{% url 'devices:delete_device' slug=device.slug %}"><button class='btn btn-danger'></button></a></td>
 			</tr>

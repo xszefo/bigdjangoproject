@@ -1,17 +1,26 @@
 from django.forms import ModelForm, ValidationError
 from .models import *
-
+import ipaddress
 class CreateDeviceForm(ModelForm):
 	class Meta:
 		model = Device
-		fields = ['name', 'ip_address', 'cluster', 'data_center', 'edc_id', 'model']
+		fields = ['name', 'ip_address', 'ip_pool', 'cluster', 'edc_id', 'model']
 
 	def clean(self, *args, **kwargs):
 		cleaned_data = super().clean()
 		form_name = cleaned_data.get('name')
 		form_ip_address = cleaned_data.get('ip_address')
+		form_ip_pool = cleaned_data.get('ip_pool')
 		form_cluster = cleaned_data.get('cluster')
+		
+		### Weryfikacja czy adres IP nalezy do odpowiedniej puli
+		subnet = form_ip_pool.subnet_object
+		ip = ipaddress.IPv4Address(form_ip_address)
+		
+		if ip not in subnet:
+			raise ValidationError('Adres IP musi znajdowac sie w podanej puli')
 
+		### Weryfikacja czy nie duplikuje sie adres IP
 		queryset = Device.objects.filter(ip_address=form_ip_address)
 		if queryset.count() == 1:
 			obj = queryset[0]
