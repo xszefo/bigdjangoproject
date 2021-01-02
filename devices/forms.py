@@ -4,7 +4,7 @@ import ipaddress
 class CreateDeviceForm(ModelForm):
 	class Meta:
 		model = Device
-		fields = ['name', 'ip_address', 'ip_pool', 'cluster', 'edc_id', 'model']
+		fields = ['name', 'ip_pool', 'ip_address', 'cluster', 'edc_id', 'model']
 
 	def clean(self, *args, **kwargs):
 		cleaned_data = super().clean()
