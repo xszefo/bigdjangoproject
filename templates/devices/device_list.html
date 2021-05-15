@@ -24,7 +24,7 @@
 		</div>
 	{% endfor %}
     <button type="submit" style="margin: 10px;" class="btn btn-info">Search</button>
-  	<a class="btn btn-info" style="margin: 10px;" href="{% url 'devices:list_devices' %}">Reset</a>
+  	<a class="btn btn-info reset" style="margin: 10px;" href="{% url 'devices:list_devices' %}">Reset</a>
   </form>
 
 			{% for device in queryset %}

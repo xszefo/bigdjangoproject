@@ -62,4 +62,19 @@ body {
     content: '✓';
 }
 
+.btn {
+    text-align: center;
+    transition: 0.2s;
+}
 
+.btn:hover, .btn:focus {
+    transform: scale(1.1);
+}
+
+
+.reset {
+    text-align: center;
+    display: flex;
+    align-items: center; 
+
+}
