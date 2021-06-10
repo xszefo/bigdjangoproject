@@ -1,6 +1,7 @@
 from django.forms import ModelForm, ValidationError
 from .models import *
 import ipaddress
+
 class CreateDeviceForm(ModelForm):
 	class Meta:
 		model = Device
