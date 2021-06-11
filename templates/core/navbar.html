@@ -14,6 +14,13 @@
     </ul>
    </div>
    <div>
-	<h1 style="font-family: 'Sedgwick Ave Display', cursive; color:white;"> Piotr/S </h1>
+   {% if request.user.is_authenticated %}
+    <p> {{ request.user.username }} </p>
+    {% else %}
+        <a href="{% url 'core:login' %}">LOGIN </a>
+    {% endif %}
+   </div>
+   <div>
+  	  <h1 style="font-family: 'Sedgwick Ave Display', cursive; color:white;"> Piotr/S </h1>
   </div>
 </nav>
