@@ -14,13 +14,22 @@
     </ul>
    </div>
    <div>
-   {% if request.user.is_authenticated %}
-    <p> {{ request.user.username }} </p>
-    {% else %}
-        <a href="{% url 'core:login' %}">LOGIN </a>
-    {% endif %}
+       <ul class="navbar-nav">
+      {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <p class="nav-link active">{{ request.user.username }}</p>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:logout' %}">LOGOUT</a> 
+        </li>
+        {% else %}
+           <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:login' %}">LOGIN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:signup' %}">SIGNUP</a>
+          </li>
+        {% endif %}      
+    </ul>
    </div>
-   <div>
-  	  <h1 style="font-family: 'Sedgwick Ave Display', cursive; color:white;"> Piotr/S </h1>
-  </div>
 </nav>
