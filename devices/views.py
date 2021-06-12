@@ -6,13 +6,13 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from . import models
-from .forms import CreateDeviceForm, UpdateDeviceForm
+from .models import Device, IpAddressPool
+from .forms import CreateDeviceForm, UpdateDeviceForm, CreateIpAddressPool, UpdateIpAddressPool
 # Create your views here.
 
 class DeviceFilter(django_filters.FilterSet):
    class Meta:
-        model = models.Device
+        model = Device
         fields = {
 				'name': ['contains'], 
 				'ip_pool': ['exact'], 
@@ -21,7 +21,7 @@ class DeviceFilter(django_filters.FilterSet):
 
 class ListDevices(View):
 	def get(self, request):
-		dev_filter = DeviceFilter(request.GET, queryset=models.Device.objects.order_by('ip_address', 'name'))
+		dev_filter = DeviceFilter(request.GET, queryset=Device.objects.order_by('ip_address', 'name'))
 	
 		queryset = sorted(dev_filter.qs, key=lambda obj: obj.ip_address_int)
 		form = dev_filter.form
@@ -60,7 +60,7 @@ class CreateDevice(View):
 
 class UpdateDevice(View):
 	def get(self, request, slug):
-		instance = models.Device.objects.get(slug=slug)
+		instance = Device.objects.get(slug=slug)
 		form = UpdateDeviceForm(instance=instance)
 		context = {}
 		context['form'] = form
@@ -68,7 +68,7 @@ class UpdateDevice(View):
 		return render(request, 'devices/device_form.html', context)
 
 	def post(self, request, slug):
-		instance = models.Device.objects.get(slug=slug)
+		instance = Device.objects.get(slug=slug)
 		form = UpdateDeviceForm(request.POST, instance=instance)
 		if form.is_valid():
 			form.save()
@@ -80,5 +80,27 @@ class UpdateDevice(View):
 			return render(request, 'devices/device_form.html', context)
 
 class DeleteDevice(DeleteView):
-	model = models.Device
+	model = Device
 	success_url = reverse_lazy('devices:list_devices')
+	template_name = 'devices/confirm_delete.html'
+
+class ListIpAddressPool(ListView):
+	queryset = IpAddressPool.objects.all()
+	template_name = 'devices/ipaddresspool_list.html'
+	context_object_name = 'ip_pools'
+
+class CreateIpAddressPool(CreateView):
+	template_name = 'devices/ipaddresspool_form.html'
+	form_class = CreateIpAddressPool
+	success_url = reverse_lazy('devices:ip_pools-list')
+
+class DeleteIpAddressPool(DeleteView):
+	model = IpAddressPool
+	success_url = reverse_lazy('devices:ip_pools-list')
+	template_name = 'devices/confirm_delete.html'
+
+class UpdateIpAddressPool(UpdateView):
+	queryset = IpAddressPool.objects.all()
+	form_class = UpdateIpAddressPool
+	success_url = reverse_lazy('devices:ip_pools-list')
+	template_name = 'devices/ipaddresspool_form.html'

@@ -1,5 +1,5 @@
 from django.forms import ModelForm, ValidationError
-from .models import *
+from .models import Device, IpAddressPool
 import ipaddress
 
 class CreateDeviceForm(ModelForm):
@@ -45,3 +45,34 @@ class CreateDeviceForm(ModelForm):
 
 class UpdateDeviceForm(CreateDeviceForm):
 	pass
+
+class CreateIpAddressPool(ModelForm):
+	class Meta:
+		model = IpAddressPool
+		fields = (
+			'name',
+			'subnet',
+			'mask'
+		)
+	
+	# def clean_name(self, *args, **kwargs):
+	# 	name = self.cleaned_data.get('name')
+	# 	if not IpAddressPool.objects.filter(name=name):
+	# 		return name
+	# 	raise ValidationError(f'Name {name} is already taken.')
+
+		
+	# def clean(self, *args, **kwargs):
+	# 	cleaned_data = super().clean(*args, **kwargs)
+	# 	name = cleaned_data.get('name')
+	# 	subnet = cleaned_data.get('subnet')
+	# 	mask = cleaned_data.get('mask')
+
+	# 	print(name, subnet, mask)
+	# 	if not IpAddressPool.objects.filter(subnet=subnet, mask=mask):
+	# 		return cleaned_data
+	# 	raise ValidationError(f'Subnet {subnet}/{mask} already exists.')
+
+class UpdateIpAddressPool(CreateIpAddressPool):
+	pass
+

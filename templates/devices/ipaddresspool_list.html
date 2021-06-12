@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-6">
+        <a href="{% url 'devices:ip_pools-create' %}"<button class='btn btn-primary mb-5'>Add ip address pool</button></a>
+
+        <table class='table'>
+            <thead>
+                <td>Name</td>
+                <td>Subnet</td>
+                <td>Update</td>
+			    <td>Delete</td>
+            </thead>
+            <tbody>
+                {% for ip_pool in ip_pools %}
+                    <tr>
+                        <td>{{ ip_pool.name }}</td>
+                        <td>{{ ip_pool.subnet }}/{{ ip_pool.mask }}</td>
+                        <td><a href="{% url 'devices:ip_pools-update' pk=ip_pool.pk %}"><button class='btn btn-primary'></button></a></td>
+                        <td><a href="{% url 'devices:ip_pools-delete' pk=ip_pool.pk %}"><button class='btn btn-danger'></button></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
