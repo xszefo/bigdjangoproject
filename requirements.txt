@@ -121,7 +121,7 @@ textfsm==1.1.2
 texttable==1.6.2
 traitlets==4.3.3
 transitions==0.8.5
-Twisted==18.9.0
+Twisted==22.1.0
 ubuntu-advantage-tools==27.0
 ufw==0.36
 unattended-upgrades==0.1
