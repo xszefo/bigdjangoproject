@@ -80,7 +80,7 @@ pgi==0.0.11.2
 pickleshare==0.7.5
 prettytable==0.7.2
 prompt-toolkit==2.0.10
-protobuf==3.17.1
+protobuf==3.18.3
 psutil==5.5.1
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
