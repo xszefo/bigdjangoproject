@@ -45,7 +45,7 @@ incremental==16.10.1
 ipython==7.16.3
 ipython_genutils==0.2.0
 jedi==0.15.2
-Jinja2==2.10.1
+Jinja2==2.11.3
 jmespath==0.9.4
 jsonpatch==1.22
 jsonpointer==2.0
