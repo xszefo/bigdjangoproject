@@ -1,4 +1,4 @@
-ansible==4.2.0
+ansible==7.0.0
 apache-libcloud==2.8.0
 appdirs==1.4.3
 argcomplete==1.8.1
